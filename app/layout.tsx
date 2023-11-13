@@ -18,9 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <Sidebar>
-          {children}
-        </Sidebar>
+          <Sidebar>
+            {children}
+          </Sidebar>
         </body>
     </html>
   )

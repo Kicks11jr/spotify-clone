@@ -19,7 +19,7 @@ const Header: React.FC<HeaderProps> = ({
     const router = useRouter();
 
     const handleLogout = () => {
-        //Handle logout in the futur
+        //Handle logout in the future
     }
 
     return (

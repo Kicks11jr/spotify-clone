@@ -1,6 +1,6 @@
 # **Spotify Clone**
 
-![Spotify Clone]()
+![Spotify Clone](https://github.com/Kicks11jr/spotify-clone/assets/121013826/55cc3727-0cbc-4392-aae6-b55b4701abe1)
 
 Bienvenue dans le projet Spotify Clone! Ce projet a été conçu avec le but principal d'explorer et d'apprendre de nouvelles technologies tout en construisant un clone fonctionnel de l'application de streaming musical populaire, Spotify.
 

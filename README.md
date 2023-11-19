@@ -6,7 +6,7 @@ Bienvenue dans le projet Spotify Clone! Ce projet a été conçu avec le but pri
 
 ## Technologies Utilisées
 
-Ce projet repose sur une stack technologique diversifiée pour offrir une expérience utilisateur riche et complète. Les technologies principales incluent :
+Ce projet repose sur une stack technologique diversifiée. Les technologies principales incluent :
 
 - **Next.js 14**: Un framework React pour le rendu côté serveur et le développement d'applications web modernes.
 - **React**: La bibliothèque JavaScript pour la construction d'interfaces utilisateur interactives.
@@ -17,7 +17,7 @@ Ce projet repose sur une stack technologique diversifiée pour offrir une expér
 
 ## Caractéristiques Clés
 
-Ce clone de Spotify intègre quelques fonctionnalités pour recréer vaguement similaire à une expérience utilisateur sur le vrai Spotify. Quelques-unes des caractéristiques :
+Ce clone de Spotify intègre quelques fonctionnalités pour recréer une expérience utilisateur à peu près similaire que sur le vrai Spotify. Quelques-unes des caractéristiques :
 
 - **Téléchargement de Chansons**: Permet aux utilisateurs de télécharger leurs chansons préférées.
 - **Intégration Stripe**: Assure des transactions sécurisées et la gestion des abonnements.

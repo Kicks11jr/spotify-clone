@@ -39,3 +39,11 @@ Ce clone de Spotify intègre quelques fonctionnalités pour recréer vaguement s
 ## Apprentissage et Développement
 
 Ce projet a servi de terrain d'apprentissage pour explorer de nouvelles technologies.
+
+## Preview
+
+<div style="display: flex; space-between;">
+  <img alt="Mobile View GIF" src="https://github.com/Kicks11jr/spotify-clone/assets/121013826/b079d202-d20c-4c1d-b1f1-9404db5dcc39"/>
+  <img alt="Desktop View GIF" src="https://github.com/Kicks11jr/spotify-clone/assets/121013826/96449715-8881-41cd-9744-26854e75683b"/>
+</div>
+

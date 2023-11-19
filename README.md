@@ -17,7 +17,7 @@ Ce projet repose sur une stack technologique diversifiée. Les technologies prin
 
 ## Caractéristiques Clés
 
-Ce clone de Spotify intègre quelques fonctionnalités pour recréer une expérience utilisateur à peu près similaire que sur le vrai Spotify. Quelques-unes des caractéristiques :
+Ce clone de Spotify intègre quelques fonctionnalités pour recréer une expérience utilisateur à peu près similaire au vrai Spotify. Quelques-unes des caractéristiques :
 
 - **Téléchargement de Chansons**: Permet aux utilisateurs de télécharger leurs chansons préférées.
 - **Intégration Stripe**: Assure des transactions sécurisées et la gestion des abonnements.

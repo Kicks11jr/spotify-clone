@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# **Spotify Clone**
 
-## Getting Started
+![Spotify Clone]()
 
-First, run the development server:
+Bienvenue dans le projet Spotify Clone! Ce projet a été conçu avec le but principal d'explorer et d'apprendre de nouvelles technologies tout en construisant un clone fonctionnel de l'application de streaming musical populaire, Spotify.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Technologies Utilisées
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ce projet repose sur une stack technologique diversifiée pour offrir une expérience utilisateur riche et complète. Les technologies principales incluent :
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Next.js 14**: Un framework React pour le rendu côté serveur et le développement d'applications web modernes.
+- **React**: La bibliothèque JavaScript pour la construction d'interfaces utilisateur interactives.
+- **Tailwind CSS**: Un framework de conception utilitaire pour créer une interface utilisateur élégante et réactive.
+- **Supabase**: Une plateforme de développement backend qui offre une base de données PostgreSQL et des fonctionnalités d'authentification en temps réel.
+- **PostgreSQL**: Un système de gestion de base de données relationnelle.
+- **Stripe**: Une solution de paiement en ligne pour intégrer des fonctionnalités de paiement sécurisé.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Caractéristiques Clés
 
-## Learn More
+Ce clone de Spotify intègre quelques fonctionnalités pour recréer vaguement similaire à une expérience utilisateur sur le vrai Spotify. Quelques-unes des caractéristiques :
 
-To learn more about Next.js, take a look at the following resources:
+- **Téléchargement de Chansons**: Permet aux utilisateurs de télécharger leurs chansons préférées.
+- **Intégration Stripe**: Assure des transactions sécurisées et la gestion des abonnements.
+- **Design Tailwind CSS**: Offre une interface utilisateur élégante et réactive.
+- **Animations Tailwind et Effets de Transition**: Ajoutent une touche d'interactivité à l'expérience utilisateur.
+- **Authentification avec Supabase**: Sécurise l'accès aux fonctionnalités du Spotify Clone.
+- **Intégration de l'Authentification GitHub**: Permet aux utilisateurs de se connecter avec leurs comptes GitHub.
+- **Stockage de Fichiers et Images avec Supabase**: Facilite le téléchargement et la gestion de fichiers multimédias.
+- **Validation de Formulaire Client avec react-hook-form**: Améliore l'expérience utilisateur en assurant la saisie correcte des données.
+- **Gestion des Erreurs Serveur avec react-toast**: Fournit des retours visuels clairs en cas d'erreurs.
+- **Lecture Audio de Chansons**: Permet aux utilisateurs d'apprécier leur musique préférée.
+- **Système de Favoris et Playlists / Chansons Aimées**: Offre des fonctionnalités de personnalisation.
+- **Composant Audio Avancé**: Intègre des fonctionnalités avancées pour une expérience audio améliorée.
+- **Intégration de Paiements Récurrents avec Stripe**: Gère les abonnements des utilisateurs en toute transparence.
+- **Routes POST, GET, et DELETE dans les Gestionnaires de Routes (app/api)**: Permet la manipulation sécurisée des données.
+- **Accès Direct à la Base de Données dans les Composants React Serveur (SANS API)**: Optimise la récupération des données.
+- **Gestion des Relations entre les Composants Server et Child en Temps Réel**: Assure une communication efficace.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Apprentissage et Développement
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Ce projet a servi de terrain d'apprentissage pour explorer de nouvelles technologies.

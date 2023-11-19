@@ -1,13 +1,17 @@
+// Import "useClient" for using supabase as a client
 "use client";
 
+// Import dependencies
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
+// some imports
 import { Song } from "@/types";
 import { useUser } from "@/hooks/useUser";
 import MediaItem from "@/components/MediaItem";
 import LikeButton from "@/components/LikeButton";
 import useOnPlay from "@/hooks/useOnPlay";
+
 
 interface LikedContentProps {
     songs: Song[];
@@ -16,17 +20,21 @@ interface LikedContentProps {
 const LikedContent: React.FC<LikedContentProps> = ({
     songs
 }) => {
+    // Initialize Next.js router and user hook
     const router = useRouter();
     const { isLoading, user } = useUser();
 
+    // Initialize the onPlay hook for handling play functionality
     const onPlay = useOnPlay(songs);
 
+    // Check if the user is not logged in, redirect to the home page
     useEffect(() => {
         if (!isLoading && !user) {
             router.replace('/');
         }
     }, [isLoading, user, router]);
 
+    // If there are no liked songs
     if (songs.length === 0) {
         return (
             <div className="
@@ -42,6 +50,7 @@ const LikedContent: React.FC<LikedContentProps> = ({
         )
     }
 
+    // Display list Liked songs
     return (
         <div className="
             flex
@@ -75,4 +84,5 @@ const LikedContent: React.FC<LikedContentProps> = ({
     );
 }
 
+// export LikedContent component
 export default LikedContent;

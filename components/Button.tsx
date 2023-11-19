@@ -1,9 +1,11 @@
 import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
+// Props interface for the Button component, extending standard HTML button attributes
 interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
+// Button component using forwardRef to forward the ref to the underlying button element
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     className,
     children,
@@ -40,6 +42,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     )
 })
 
+// Setting the display name for the Button component
 Button.displayName = "Button";
 
 export default Button;

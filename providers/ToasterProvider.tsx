@@ -2,8 +2,10 @@
 
 import { Toaster } from "react-hot-toast";
 
+// Functional component ToasterProvider
 const ToasterProvider = () => {
     return (
+        // Rendering the Toaster component with custom toast options
         <Toaster
             toastOptions={{
                 style: {

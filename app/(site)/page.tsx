@@ -1,18 +1,24 @@
+// custom component imports from other components folder
 import getSongs from "@/actions/getSongs";
 import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
 
+// custom component import from this components folder
 import PageContent from "./components/PageContent";
 
+// constant set to 0 because no auto revalidation is needed
 export const revalidate = 0;
 
+// Main function Home Page
 export default async function Home() {
+  // Fetching the list of songs from supabase using getSongs function
   const songs = await getSongs();
 
   /* throw new Error('Test') */
 
-
+  // RMain page structure
   return ( 
+    
     <div className="
       bg-neutral-900
       rounded-lg
@@ -21,6 +27,7 @@ export default async function Home() {
       overflow-hidden
       overflow-y-auto
     ">
+      {/* Header section */}
       <Header>
         <div className="mb-2">
           <h1 className="
@@ -30,6 +37,7 @@ export default async function Home() {
           ">
             Welcome back
           </h1>
+          {/* Displaying Liked Songs */}
           <div className="
             grid
             grid-cols-1
@@ -39,6 +47,7 @@ export default async function Home() {
             gap-3
             mt-4
           ">
+            {/* ListItem component for Liked Songs */}
             <ListItem
               image="/images/liked.png"
               name="Liked Songs"
@@ -47,6 +56,7 @@ export default async function Home() {
           </div>
         </div>
       </Header>
+      {/* Main content section */}
       <div className="
         mt-2
         mb-7
@@ -57,6 +67,7 @@ export default async function Home() {
           justify-between
           items-center
         ">
+          {/* Heading for displaying Newest songs */}
           <h1 className="
             text-white
             text-2xl
@@ -65,6 +76,7 @@ export default async function Home() {
             Newest songs
           </h1>
         </div>
+        {/* PageContent component for displaying songs */}
         <PageContent songs={songs}/>
       </div>
     </div>

@@ -1,7 +1,10 @@
+// Import "useClient" for using supabase as a client
 "use client";
 
+// custom Box component
 import Box from "@/components/Box";
 
+// Error function component
 const Error = () => {
     return (
         <Box className="
@@ -19,4 +22,5 @@ const Error = () => {
     );
 };
 
+// Export Error component
 export default Error;

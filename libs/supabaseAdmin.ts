@@ -1,3 +1,4 @@
+// Some Imports
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 
@@ -7,46 +8,56 @@ import { Price, Product } from '@/types';
 import { stripe } from './stripe';
 import { toDateTime } from './helpers';
 
+// Creating a Supabase client instance with the admin key (definded in .env.local)
 export const supabaseAdmin = createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL || '',
     process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 );
 
+// Function to insert or update (upsert) a product record in the 'products' table
 const upsertProductRecord = async (product: Stripe.Product) => {
-const productData: Product = {
-    id: product.id,
-    active: product.active,
-    name: product.name,
-    description: product.description ?? undefined,
-    image: product.images?.[0] ?? null,
-    metadata: product.metadata
+
+    // Mapping Stripe product data to Supabase product data
+    const productData: Product = {
+        id: product.id,
+        active: product.active,
+        name: product.name,
+        description: product.description ?? undefined,
+        image: product.images?.[0] ?? null,
+        metadata: product.metadata
+    };
+
+    // Insert or Update (upsert) the product data into the 'products' table
+    const { error } = await supabaseAdmin.from('products').upsert([productData]);
+    if (error) throw error;
+    console.log(`Product inserted/updated: ${product.id}`);
 };
 
-const { error } = await supabaseAdmin.from('products').upsert([productData]);
-if (error) throw error;
-console.log(`Product inserted/updated: ${product.id}`);
-};
-
+// Function to upsert a price record in the 'prices' table
 const upsertPriceRecord = async (price: Stripe.Price) => {
-const priceData: Price = {
-    id: price.id,
-    product_id: typeof price.product === 'string' ? price.product : '',
-    active: price.active,
-    currency: price.currency,
-    description: price.nickname ?? undefined,
-    type: price.type,
-    unit_amount: price.unit_amount ?? undefined,
-    interval: price.recurring?.interval,
-    interval_count: price.recurring?.interval_count,
-    trial_period_days: price.recurring?.trial_period_days,
-    metadata: price.metadata
+
+    // Mapping Stripe price data to Supabase price data
+    const priceData: Price = {
+        id: price.id,
+        product_id: typeof price.product === 'string' ? price.product : '',
+        active: price.active,
+        currency: price.currency,
+        description: price.nickname ?? undefined,
+        type: price.type,
+        unit_amount: price.unit_amount ?? undefined,
+        interval: price.recurring?.interval,
+        interval_count: price.recurring?.interval_count,
+        trial_period_days: price.recurring?.trial_period_days,
+        metadata: price.metadata
 };
 
-const { error } = await supabaseAdmin.from('prices').upsert([priceData]);
-if (error) throw error;
-console.log(`Price inserted/updated: ${price.id}`);
+    // Upserting the price data into the 'prices' table
+    const { error } = await supabaseAdmin.from('prices').upsert([priceData]);
+    if (error) throw error;
+    console.log(`Price inserted/updated: ${price.id}`);
 };
 
+// Function to create or retrieve a customer from the 'customers' table
 const createOrRetrieveCustomer = async ({
     email,
     uuid
@@ -54,30 +65,39 @@ const createOrRetrieveCustomer = async ({
     email: string;
     uuid: string;
 }) => {
+    // Retrieving the Stripe customer ID from Supabase based on the UUID
     const { data, error } = await supabaseAdmin
         .from('customers')
         .select('stripe_customer_id')
         .eq('id', uuid)
         .single();
-if (error || !data?.stripe_customer_id) {
-    const customerData: { metadata: { supabaseUUID: string }; email?: string } =
-    {
-        metadata: {
-        supabaseUUID: uuid
+
+    // Handling errors or missing customer data
+    if (error || !data?.stripe_customer_id) {
+        // Creating a new customer on the Stripe side
+        const customerData: { metadata: { supabaseUUID: string }; email?: string } =
+        {
+            metadata: {
+            supabaseUUID: uuid
+        }
+    };
+
+        if (email) customerData.email = email;
+
+        const customer = await stripe.customers.create(customerData);
+
+        // Inserting the new customer data into the 'customers' table
+        const { error: supabaseError } = await supabaseAdmin
+            .from('customers')
+            .insert([{ id: uuid, stripe_customer_id: customer.id }]);
+        if (supabaseError) throw supabaseError;
+        console.log(`New customer created and inserted for ${uuid}.`);
+        return customer.id;
     }
-};
-    if (email) customerData.email = email;
-    const customer = await stripe.customers.create(customerData);
-    const { error: supabaseError } = await supabaseAdmin
-        .from('customers')
-        .insert([{ id: uuid, stripe_customer_id: customer.id }]);
-    if (supabaseError) throw supabaseError;
-    console.log(`New customer created and inserted for ${uuid}.`);
-    return customer.id;
-}
     return data.stripe_customer_id;
 };
 
+// Function to copy billing details from a Stripe payment method to Supabase
 const copyBillingDetailsToCustomer = async (
     uuid: string,
     payment_method: Stripe.PaymentMethod
@@ -85,9 +105,15 @@ const copyBillingDetailsToCustomer = async (
 
     const customer = payment_method.customer as string;
     const { name, phone, address } = payment_method.billing_details;
+
+    // Checking if required billing details are available
     if (!name || !phone || !address) return;
+
+// Updating billing details for the customer on the Stripe side
 //@ts-ignore
 await stripe.customers.update(customer, { name, phone, address });
+
+// Updating billing details for the user in the 'users' table on the Supabase side
 const { error } = await supabaseAdmin
     .from('users')
     .update({
@@ -98,26 +124,31 @@ const { error } = await supabaseAdmin
     if (error) throw error;
 };
 
+// Function to handle changes in subscription status
 const manageSubscriptionStatusChange = async (
     subscriptionId: string,
     customerId: string,
     createAction = false
 ) => {
 
-const { data: customerData, error: noCustomerError } = await supabaseAdmin
-    .from('customers')
-    .select('id')
-    .eq('stripe_customer_id', customerId)
-    .single();
-if (noCustomerError) throw noCustomerError;
+    // Retrieving customer data based on the Stripe customer ID
+    const { data: customerData, error: noCustomerError } = await supabaseAdmin
+        .from('customers')
+        .select('id')
+        .eq('stripe_customer_id', customerId)
+        .single();
 
-const { id: uuid } = customerData!;
+    if (noCustomerError) throw noCustomerError;
 
-const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
-    expand: ['default_payment_method']
+    // Extracting UUID from customer data
+    const { id: uuid } = customerData!;
+
+    // Retrieving subscription data from Stripe
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+        expand: ['default_payment_method']
 });
 
-
+// Mapping subscription data to Supabase subscription data
 const subscriptionData: Database['public']['Tables']['subscriptions']['Insert'] =
     {
         id: subscription.id,
@@ -153,6 +184,7 @@ const subscriptionData: Database['public']['Tables']['subscriptions']['Insert'] 
             : null
         };
 
+        // Upserting subscription data into the 'subscriptions' table
         const { error } = await supabaseAdmin
             .from('subscriptions')
             .upsert([subscriptionData]);
@@ -161,6 +193,7 @@ const subscriptionData: Database['public']['Tables']['subscriptions']['Insert'] 
         `Inserted/updated subscription [${subscription.id}] for user [${uuid}]`
 );
 
+    // If specified, copy billing details to the customer on the Supabase side
     if (createAction && subscription.default_payment_method && uuid)
     //@ts-ignore
     await copyBillingDetailsToCustomer(
@@ -169,6 +202,7 @@ const subscriptionData: Database['public']['Tables']['subscriptions']['Insert'] 
     );
 };
 
+// Exporting functions
 export {
     upsertProductRecord,
     upsertPriceRecord,
